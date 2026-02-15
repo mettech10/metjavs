@@ -1,11 +1,22 @@
 # Neuro Sensory Cognitive App
 
-Full-stack web application with:
+A full-stack application with:
 - Node.js + Express backend
 - React frontend (Vite)
 - MongoDB persistence
 - JWT authentication
-- Sensory test modules and results dashboard
+- Interactive sensory test modules
+- Results dashboard with per-module analytics
+
+## Features
+- Register/Login authentication
+- Protected sensory testing and dashboard routes
+- Three interactive modules:
+  - Reaction Time test (fast click timing)
+  - Memory Sequence test (recall challenge)
+  - Focus Score test (timed click accuracy)
+- Automatic result storage to MongoDB
+- Dashboard summary cards + recent sessions table
 
 ## Local setup
 
@@ -23,7 +34,7 @@ npm run install:all
 cp server/.env.example server/.env
 ```
 
-Update `server/.env` if needed.
+Edit `server/.env` if needed.
 
 ### 4) Run in development
 ```bash
@@ -33,11 +44,10 @@ npm run dev
 - Backend: `http://localhost:5000`
 - Frontend: `http://localhost:5173`
 
-### API endpoints
+## API endpoints
 - `POST /api/auth/register`
 - `POST /api/auth/login`
 - `GET /api/sensory/modules` (auth)
 - `POST /api/sensory/results` (auth)
 - `GET /api/sensory/results` (auth)
 - `GET /api/sensory/dashboard` (auth)
-

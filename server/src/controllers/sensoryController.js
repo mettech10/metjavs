@@ -30,8 +30,8 @@ export const submitResult = async (req, res) => {
   try {
     const { moduleType, score, metadata } = req.body;
 
-    if (!moduleType || typeof score !== 'number') {
-      return res.status(400).json({ message: 'moduleType and numeric score are required.' });
+    if (!moduleType || typeof score !== 'number' || Number.isNaN(score) || !Number.isFinite(score)) {
+      return res.status(400).json({ message: 'moduleType and a valid numeric score are required.' });
     }
 
     const moduleExists = testModules.some((module) => module.id === moduleType);
