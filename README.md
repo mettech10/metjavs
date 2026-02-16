@@ -1,53 +1,50 @@
-# Neuro Sensory Cognitive App
+# Multimodal Neuro-Sensory Cognitive Risk Assessment Platform
 
-A full-stack application with:
-- Node.js + Express backend
-- React frontend (Vite)
-- MongoDB persistence
-- JWT authentication
-- Interactive sensory test modules
-- Results dashboard with per-module analytics
+Production-oriented full-stack reference implementation using:
+- **Frontend:** React 18 + TypeScript + Tailwind + Framer Motion + Recharts
+- **Backend:** Node.js/Express + TypeScript + JWT + RBAC
+- **Database:** PostgreSQL + Prisma ORM
 
-## Features
-- Register/Login authentication
-- Protected sensory testing and dashboard routes
-- Three interactive modules:
-  - Reaction Time test (fast click timing)
-  - Memory Sequence test (recall challenge)
-  - Focus Score test (timed click accuracy)
-- Automatic result storage to MongoDB
-- Dashboard summary cards + recent sessions table
+## Clinical modules implemented
+- Visual screening (logMAR-oriented workflow scaffolding + classification)
+- Hearing screening (DIN-oriented workflow scaffolding + placeholder audio assets)
+- Olfactory screening (home items and odor card mode scaffolding)
+- Composite fusion score and clinician-adjustable weights
 
-## Local setup
+## Security/HIPAA-aware controls
+- JWT auth, role-based authorization
+- Input sanitization and API rate limiting
+- HTTPS enforcement middleware
+- PII encryption helper for sensitive demographics
+- Audit logging for data access/actions
 
-### 1) Prerequisites
-- Node.js 18+
-- MongoDB running locally on `mongodb://127.0.0.1:27017`
+## Exports
+- PDF report endpoint and client PDF render
+- CSV export endpoint
+- Excel export endpoint
 
-### 2) Install dependencies
+## Developer setup
 ```bash
 npm run install:all
-```
-
-### 3) Configure environment
-```bash
 cp server/.env.example server/.env
-```
-
-Edit `server/.env` if needed.
-
-### 4) Run in development
-```bash
 npm run dev
 ```
 
-- Backend: `http://localhost:5000`
-- Frontend: `http://localhost:5173`
+### Prisma
+```bash
+npm run prisma:generate --workspace server
+npm run prisma:migrate --workspace server
+npm run prisma:seed --workspace server
+```
 
-## API endpoints
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-- `GET /api/sensory/modules` (auth)
-- `POST /api/sensory/results` (auth)
-- `GET /api/sensory/results` (auth)
-- `GET /api/sensory/dashboard` (auth)
+### Testing
+```bash
+npm run test --workspace server
+npm run test --workspace client
+```
+
+## Demo acceleration
+- `POST /api/sessions/dev/simulate` auto-completes sensory + composite sessions with realistic randomized values.
+
+## Disclaimer
+**This tool is for screening purposes only and does not constitute a medical diagnosis.**

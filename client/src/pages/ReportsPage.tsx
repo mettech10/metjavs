@@ -1,0 +1,3 @@
+export default function ReportsPage() {
+  return <div className="card space-y-2"><h2 className="font-semibold text-lg">Exports</h2><p className="text-sm text-slate-600">Download clinician-ready PDF, CSV, and Excel reports.</p><div className="flex gap-2"><a href="http://localhost:5000/api/sessions/export/pdf" className="px-3 py-2 rounded bg-emerald-700 text-white">PDF</a><a href="http://localhost:5000/api/sessions/export/csv" className="px-3 py-2 rounded bg-white border">CSV</a><a href="http://localhost:5000/api/sessions/export/excel" className="px-3 py-2 rounded bg-white border">Excel</a></div></div>;
+}
