@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  PATIENT
+  CLINICIAN
+  ADMIN
+}
+
+enum TestType {
+  VISUAL
+  AUDITORY
+  OLFACTORY
+  COGNITIVE
+  COMPOSITE
+}
+
+model User {
+  id             String        @id @default(cuid())
+  email          String        @unique
+  passwordHash   String
+  role           Role          @default(PATIENT)
+  firstNameEnc   String
+  lastNameEnc    String
+  dobEnc         String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  sessions       TestSession[]
+  auditLogs      AuditLog[]    @relation("AuditActor")
+  clinicalNotes  ClinicalNote[]
+}
+
+model TestSession {
+  id               String   @id @default(cuid())
+  userId            String
+  testType          TestType
+  timestamp         DateTime @default(now())
+  deviceInfo        Json
+  environmentData   Json
+  rawResponses      Json
+  computedScores    Json
+  calibrationData   Json
+  createdById       String?
+  user              User     @relation(fields: [userId], references: [id])
+  createdBy         User?    @relation("AuditActor", fields: [createdById], references: [id])
+
+  @@index([userId, testType, timestamp])
+}
+
+model ClinicalNote {
+  id         String   @id @default(cuid())
+  userId      String
+  clinicianId String
+  note        String
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+  clinician   User     @relation(fields: [clinicianId], references: [id])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId     String?
+  action      String
+  entityType  String
+  entityId    String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  actor       User?    @relation("AuditActor", fields: [actorId], references: [id])
+
+  @@index([createdAt])
+}
